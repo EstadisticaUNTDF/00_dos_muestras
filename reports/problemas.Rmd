@@ -1,8 +1,9 @@
 ---
-title: "Problemas no paramÃ©trico"
+title: "Problemas no paramétrico"
 output:
-  html_document: default
+  word_document: default
   html_notebook: default
+  html_document: default
 ---
 
 ```{r setup, echo=FALSE, cache=FALSE, message=FALSE, warning=FALSE}
@@ -75,7 +76,7 @@ pichones
 ¿Cuál es la conclusión que debería sacar el biólogo?
 
 ```{r pichones-analisis}
-with(pichones, wilcox.test(Primer, Segundo, alternative = "greater", paired = ))
+with(pichones, wilcox.test(Primer, Segundo, alternative = "greater", paired = TRUE))
 ```
 
 Aparentemente no hay diferencias de peso en el momento de la eclosión entre el primer y el segundo pichón.
@@ -114,7 +115,7 @@ ratones
 ¿Qué conclusión se puede sacar con estos datos?
 
 ```{r ratones-analisis}
-with(ratones, wilcox.test(Peso~Ambiente, alternative = "two.sided", paired = FALSE))
+with(ratones, wilcox.test(Peso ~ Ambiente, alternative = "two.sided", paired = FALSE))
 ```
 
 Los ratones del valle y de la estepa tienen el mismo peso ya que no se encontraron evidencias de que los pesos sean diferentes (p>0.25)
