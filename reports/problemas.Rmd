@@ -31,9 +31,9 @@ concentración del virus en sangre. Luego de finalizado el tratamiento con la
 droga, se volvió a estudiar la concentración del virus en los cobayos. Los
 resultados obtenidos fueron:
 
-```{r cobayos}
+```{r cobayos, results='asis'}
 cobayos<- read_sav("../data/NP1.sav")
-cobayos
+cobayos %>% pander()
 ```
 
 ¿Qué conclusiones puede Ud. sacar acerca de la efectividad del tratamiento?
@@ -42,7 +42,6 @@ cobayos
 with(cobayos, wilcox.test(Antes, Despues, alternative = "greater", paired = TRUE))
 ```
 
-El tratamiento es efectivo (p<0.05) para reducir la concentración de virus. Aunque faltaría un control para asegurar que se debe al tratamiento y no a otro fenómeno.
 
 2.- Un ecólogo desea evaluar en una especie de foca si el éxito reproductivo de
 las hembras está asociado al sexo de sus crías. Para ello utilizó información
@@ -50,9 +49,9 @@ de una población que ha sido seguida durante varias generaciones, registrando
 para 15 hembras el número de nietos producidos por sus hijos e hijas. Los datos
 fueron:
 
-```{r focas}
+```{r focas, results='asis'}
 focas <- read_sav("../data/NP2.sav")
-focas
+focas %>% pander()
 ```
 
 ¿Depende el éxito reproductivo de las hembras del sexo de sus hijos? 
@@ -61,16 +60,14 @@ focas
 with(focas, wilcox.test(Hembra, Macho, alternative = "two.sided", paired = TRUE))
 ```
 
-No se encontraron evidencias (p>0.10) de que el número de descendientes dependa del sexo de los hijos.
-
 3.- Una especie de ave pone dos huevos por temporada reproductiva. Se ha visto 
 que de los dos pichones el primero en eclosionar tiene mayores probabilidades de sobrevivir. Un biólogo desea establecer si esta situación está relacionada con 
 el peso del pichón al momento de la eclosión. Para ello registró el peso de los 
 pichones al momento de la eclosión del huevo, obteniendo los siguientes datos:
 
-```{r pichones}
+```{r pichones, results='asis'}
 pichones <- read_sav("../data/NP3.sav")
-pichones
+pichones %>% pander()
 ```
 
 ¿Cuál es la conclusión que debería sacar el biólogo?
@@ -79,16 +76,14 @@ pichones
 with(pichones, wilcox.test(Primer, Segundo, alternative = "greater", paired = TRUE))
 ```
 
-Aparentemente no hay diferencias de peso en el momento de la eclosión entre el primer y el segundo pichón.
-
 4.- Un biólogo está estudiando el efecto del aprendizaje en la habilidad de los
 osos para capturar peces. Para ello registra el porcentaje de éxitos de captura
 durante una semana de 17 ositos cuando comienzan a pescar y repite el análisis
 6 meses después. Los resultados obtenidos fueron:
 
-```{r osos}
+```{r osos, results='asis'}
 osos <- read_sav("../data/NP4.sav")
-osos
+osos %>% pander()
 ```
 
 ¿Mejora la capacidad de captura de los ositos con la experiencia?
@@ -97,19 +92,17 @@ osos
 with(osos, wilcox.test(Tiempo0, Tiempo6, alternative = "less", paired = TRUE))
 ```
 
-La experiencia mejora significativamente (p<0.05) el éxito de captura de los osos. Ya que el éxito aumentó con el tiempo.
-
 5.- Un investigador, trabajando con una especie de ratones de campo, desea saber
 si los ejemplares provenientes del valle son de similar tamaño a los 
 provenientes de la meseta. Para ello realizó capturas de ratones en ambos 
 ambientes, midiendo el peso en gr de los ejemplares capturados. Los datos
 obtenidos fueron:
 
-```{r ratones}
+```{r ratones, results='asis'}
 ratones <- read_sav("../data/NP5.sav") %>%
   mutate(Ambiente = factor(Ambiente, 
                            labels = names(attr(Ambiente, "label"))))
-ratones
+ratones %>% pander()
 ```
 
 ¿Qué conclusión se puede sacar con estos datos?
@@ -117,8 +110,6 @@ ratones
 ```{r ratones-analisis}
 with(ratones, wilcox.test(Peso ~ Ambiente, alternative = "two.sided", paired = FALSE))
 ```
-
-Los ratones del valle y de la estepa tienen el mismo peso ya que no se encontraron evidencias de que los pesos sean diferentes (p>0.25)
 
 6.- Una empresa pesquera desea evaluar si existen diferencias entre dos jefes
 de planta que trabajan en uno de sus buques factoría. De acuerdo a lo expresado
@@ -129,9 +120,9 @@ debían procesar. En cada lance, un empleado imparcial de control de calidad
 registraba el porcentaje de descarte producido a partir de la captura. Los 
 resultados obtenidos fueron:
 
-```{r jefes}
+```{r jefes, results='asis'}
 jefes <- read_sav("../data/NP6.sav")
-jefes
+jefes %>% pander()
 ```
 
 ¿Tiene razón el capitán?
@@ -139,9 +130,6 @@ jefes
 ```{r jefes-analisis}
 with(jefes, wilcox.test(Descarte ~ Jefe, alternative = "less", paired = FALSE))
 ```
-
-El capitán tiene razón. El segundo jefe descarta significativamente (p<0.001) 
-más que el primero.
 
 7.- Los pingüinos de Magallanes hacen sus nidos en cuevas en las laderas o bajo
 de los arbustos. Un biólogo sostiene que el éxito reproductivo de las hembras 
@@ -155,11 +143,11 @@ largo de la vida. Los datos obtenidos fueron:
 Número de pichones producidos por hembras de pingüino de Magallanes a lo largo
 de su vida, discriminado por el tipo de nido que utilizaron.
 
-```{r pinguinos}
+```{r pinguinos, results='asis'}
 pinguinos <- read_sav("../data/NP7.sav") %>%
   mutate(Nido = factor(Nido, 
                            labels = names(attr(Nido, "label"))))
-pinguinos
+pinguinos %>% pander()
 ```
 
 ¿Está Ud. de acuerdo con el biólogo?
@@ -168,8 +156,6 @@ pinguinos
 with(pinguinos, wilcox.test(Pichones ~ Nido, alternative = "less"))
 ```
 
-El número de pichones que sobrevive depende del lugar (p<0.001). Es mayor en las laderas que bajo los arbustos
-
 8.- Estudiando la dieta de un delfín y del lobo marino, un biólogo desea
 establecer si las tallas consumidas de calamares por estos predadores son
 similares. Utilizando regresiones alométricas estimó los largos dorsales del
@@ -177,11 +163,11 @@ manto (LDM) a partir de los picos hallados en los contenidos estomacales.
 Los datos obtenidos fueron:
 
 Tallas de calamares (LDM, cm) consumidos por delfines y lobos marinos.
-```{r LDM}
+```{r LDM, results='asis'}
 LDM <- read_sav("../data/NP8.sav") %>%
   mutate(Especie = factor(Especie, 
                            labels = names(attr(Especie, "label"))))
-LDM
+LDM %>% pander()
 ```
 
 ¿Qué puede concluir sobre las tallas de los calamares consumidos por los 
@@ -190,7 +176,6 @@ delfines y lobos marinos?
 ```{r LDM-analisis}
 with(LDM, wilcox.test(LDM ~ Especie, alternative = "two.sided"))
 ```
-No se encontraron evidencias significativas de que el tamaño de los calamares consumidos dependa de la especie del predador. Sin embargo, la probabilidad roza la significancia. Quizá una prueba paramétrica tenga mayor potencia para detectar las diferencias. 
 
 9.- Para determinar si una droga es eficaz para disminuir la concentración de un
 virus en sangre, se seleccionaron al azar ratones infectados y se les inyectó la
@@ -201,11 +186,11 @@ resultados fueron:
 Concentración del virus en sangre de los ratones tratados y del grupo control 
 
 
-```{r droga}
+```{r droga, results='asis'}
 droga <- read_sav("../data/NP9.sav") %>%
   mutate(Tratamiento = factor(Tratamiento, 
                            labels = names(attr(Tratamiento, "label"))))
-droga
+droga %>% pander()
 ```
 
  ¿Es eficaz la droga para disminuir la concentración del virus en sangre?
@@ -213,8 +198,6 @@ droga
 ```{r droga-analisis}
 with(droga, wilcox.test(Virus ~ Tratamiento, alternative = "less"))
 ```
-
-No se encontraron evidencias significativas de que el tratamiento disminuya la concentración del virus. Sin embargo, la probabilidad es muy cercana a la significancia. Quizá una prueba paramétrica tenga mayor potencia para detectar las diferencias. 
 
 10.- Se desea establecer si las poblaciones bonaerense y patagónica de anchoita
 presentan similares niveles de parasitosis por nematodes en músculo. Para ello 
@@ -224,11 +207,11 @@ Los resultados fueron:
 Número de larvas de nematodes en el músculo de anchoitas discriminadas por poblaciones.
 
 
-```{r nematodes}
+```{r nematodes, results='asis'}
 nematodes <- read_sav("../data/NP10.sav") %>%
   mutate(Anchoita = factor(Anchoita, 
                            labels = names(attr(Anchoita, "label"))))
-nematodes
+nematodes %>% pander()
 ```
 
 ¿Existen diferencias entre poblaciones de anchoita con respecto a la parasitosis
@@ -238,8 +221,6 @@ por nematodes en músculo?
 with(nematodes, wilcox.test(Larvas ~ Anchoita, alternative = "two.sided"))
 ```
 
-Se encontró que la población de anchoíta bonaerense tiene significativa (p<0.01) una mayor parasitosis que la población patagónica.
-
 11.- Un ecólogo desea determinar si la eficiencia de captura de dos especies de
 araña es similar. Para ello realizó un experimento donde seleccionó al azar 
 ejemplares de cada especie, les permitió confeccionar sus telas y luego 
@@ -247,7 +228,7 @@ introdujo una mosca en cada caja. El ecólogo determinó para cada araña el tie
 en segundos que tardó en capturar la mosca. Los resultados fueron:
 Tiempo de captura de la mosca en segundos.
 
-```{r araña}
+```{r araña, results='asis'}
 araña <- read_sav("../data/NP11.sav")
 araña
 ```
@@ -265,11 +246,11 @@ ambas localidades. Sabiendo que el azar tenía algo que ver con la estadística,
 se preocupó de seleccionar al azar las parcelas. Los datos obtenidos fueron:
 Producción de fruta fina (kg) en cada parcela, discriminada por localidad
 
-```{r fruta}
+```{r fruta, results='asis'}
 fruta <- read_sav("../data/NP12.sav") %>%
   mutate(Localidad = factor(Localidad, 
                            labels = names(attr(Localidad, "label"))))
-fruta
+fruta %>% pander()
 ```
 
 Una vez tomados los datos, el productor acude a Ud. en busca de ayuda para 
@@ -278,4 +259,3 @@ responder su pregunta. ¿Qué le dirá al productor?
 ```{r fruta-analisis}
 with(fruta, wilcox.test(Producción ~ Localidad))
 ```
-No hay evidencias (p>0.1) de que hay diferencias significativas en la producción de fruta fina entre las dos localidades, aunque en el bolsón parece ser un poco más alta. 
